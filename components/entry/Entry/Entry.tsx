@@ -7,13 +7,13 @@ import Image from 'next/image'
 import { format } from "date-fns";
 import noImage from "./images/no_image.png";
 
-type ArticleProps = {
+type EntryProps = {
     title: string,
     createAt: Date,
     body: string | null
 }
 
-function Article(props: ArticleProps){
+function Entry(props: EntryProps){
     return(
         <Card elevation={0} sx={{ display: 'flex', flexWrap: 'nowrap', flexDirection: 'row' }}>
             <CardContent sx={{ width: 151, flex: '1' }}>
@@ -32,4 +32,4 @@ function Article(props: ArticleProps){
         </Card>
     );
 }
-export default Article;
+export default Entry;

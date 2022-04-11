@@ -1,10 +1,22 @@
 import { Avatar, Card, CardContent, Container, Grid, Typography } from '@mui/material'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import ArticleList from '../components/article/ArticleList/ArticleList'
+import { useEffect } from 'react'
+import EntryList from '../components/entry/EntryList/EntryList'
 import Header from '../components/common/Header/Header'
+import { entriesCountSelector } from '../stores/entry/selectors'
+import { fetchArticles } from '../stores/entry/slices'
+import { useAppDispatch, useAppSelector } from '../stores/hooks'
 
 const Home: NextPage = () => {
+  const dispatch = useAppDispatch();
+  const articlesCount = useAppSelector(entriesCountSelector);
+
+  useEffect(() => {
+    dispatch(fetchArticles([]));
+  },[dispatch])
+
+  
   return (
     <div>
       <Head>
@@ -16,8 +28,9 @@ const Home: NextPage = () => {
       <Container maxWidth="xl" component={'main'}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={9}>
+            <p>件数：{articlesCount}</p>
             {/* 記事一覧 */}
-            <ArticleList></ArticleList>          
+            <EntryList></EntryList>          
           </Grid>
           <Grid item xs={12} sm={3}>
             <Card elevation={0}>
