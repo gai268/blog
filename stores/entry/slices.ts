@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { EntriesState, Entry } from "./types";
 import { EntriesEntity } from "../../entities/api/EntriesEntity"
 import { parseISO } from 'date-fns';
+import { addFavorite } from './asyncThunks';
 
 // Stateの初期化
 const initialState = {
@@ -24,13 +25,21 @@ const entrySlice = createSlice({
                 entries[uuidv4()] = {
                     title: entryEntity.title,
                     body: entryEntity.body,
-                    createAt: parseISO(entryEntity.createAt)
+                    createAt: parseISO(entryEntity.createAt).getTime(),
+                    favoritesCount: 0
                 };
             }
             state.entries = entries;
             state.count = action.payload.count;
         }
     },
+    extraReducers: (builder) => {
+        // お気に入り実行後の処理
+        builder.addCase(addFavorite.fulfilled, (state, action) => {
+            const key = action.payload.entryKey
+            state.entries[key].favoritesCount++
+        })
+      },
   })
 
 export const { fetchEntries } = entrySlice.actions

@@ -15,11 +15,17 @@ export interface Entry {
      */
     title: string;
     /**
-     * 記事の作成日
+     * 記事の作成日(Unix時間)
+     * 注：Reduxではシリアル化できないDate型等はStateに定義できない
      */
-    createAt: Date,
+    createAt: number,
     /**
      * 記事本文
      */
-    body: string;
+    body: string,
+    /**
+     * お気に入り数
+     */
+    favoritesCount: number
+    ;
 }

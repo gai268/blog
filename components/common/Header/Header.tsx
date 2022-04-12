@@ -3,7 +3,7 @@ import Container from "@mui/material/Container";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import React from "react";
-function Header(){
+export const Header = () => {
     return (
         <Container maxWidth="xl">
         <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -23,4 +23,3 @@ function Header(){
         </Container>
     )
 }
-export default Header;
