@@ -17,8 +17,8 @@ stores
 │  ├─ selectors.ts
 │  ├─ slices.ts
 │  └─ types.ts
-├─ App.js
-└─ index.js
+├─ hooks.ts
+└─ stores.ts
 ```
 ## 各ファイルの役割
 ### slices
