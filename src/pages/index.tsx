@@ -7,29 +7,29 @@ import { Header } from '../components/common/Header/Header'
 import { entriesCountSelector } from '../stores/entry/selectors'
 import { fetchEntries } from '../stores/entry/slices'
 import { useAppDispatch, useAppSelector } from '../stores/hooks'
-import { EntriesEntity } from '../entities/api/EntriesEntity'
 import { Sidebar } from '../components/common/Sidebar/Sidebar'
+import { EntriesResponse } from './api/entries'
 
 
 // サーバーサイド処理
-type ServerSideProps = { entriesEntity: EntriesEntity }
+type ServerSideProps = { entriesResponse: EntriesResponse }
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // Fetch data from external API
   const res: Response = await fetch(`http://localhost:3000/api/entries`) // TODO: サンプル用
-  const entriesEntity: EntriesEntity = await res.json();
+  const entriesResponse: EntriesResponse = await res.json();
 
   // Pass data to the page via props
-  return { props: { entriesEntity } }
+  return { props: { entriesResponse } }
 }
 
-const Home = ({entriesEntity}: ServerSideProps) => {
+const Home = ({entriesResponse}: ServerSideProps) => {
   const dispatch = useAppDispatch();
   const articlesCount = useAppSelector(entriesCountSelector);
 
   useEffect(() => {
     // 記事一覧読み込み
-    dispatch(fetchEntries(entriesEntity));
-  },[dispatch, entriesEntity])
+    dispatch(fetchEntries(entriesResponse));
+  },[dispatch, entriesResponse])
 
   return (
     <div>
