@@ -1,15 +1,25 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { EntriesEntity } from '../../entities/api/EntriesEntity'
+
+export type EntriesResponse = {
+  count: number,
+  entries: Entry[]
+}
+type Entry = {
+  id: string,
+  title: string,
+  body: string,
+  createAt: string
+}
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<EntriesEntity>
+  res: NextApiResponse<EntriesResponse>
 ) {
     // TODO: dummy
-    const data: EntriesEntity = {
+    const data: EntriesResponse = {
       count: 3,
-      entryEntities: [
+      entries: [
         {
             id: "UkLwI5aowP",
             title: "タイトル3",
