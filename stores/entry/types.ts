@@ -3,7 +3,7 @@
  */
 export interface EntriesState{
     count: number,
-    entries: Record<symbol, Entry>
+    entries: Record<string, Entry>
 }
 
 /**

@@ -1,5 +1,8 @@
+import { v4 as uuidv4 } from 'uuid';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Entry, EntriesState } from "./types";
+import { EntriesState, Entry } from "./types";
+import { EntriesEntity } from "../../entities/api/EntriesEntity"
+import { parseISO } from 'date-fns';
 
 // Stateの初期化
 const initialState = {
@@ -15,15 +18,20 @@ const entrySlice = createSlice({
         /**
          * 記事一覧を読み込む
          */
-        fetchArticles(state, action: PayloadAction<Entry[]>) {
-            const entries: Record<symbol, Entry> = {}
-            for(const post of action.payload){
-                entries[Symbol()] = post;
+        fetchEntries(state, action: PayloadAction<EntriesEntity>) {
+            const entries: Record<string, Entry> = {};
+            for(const entryEntity of action.payload.entryEntities){
+                entries[uuidv4()] = {
+                    title: entryEntity.title,
+                    body: entryEntity.body,
+                    createAt: parseISO(entryEntity.createAt)
+                };
             }
             state.entries = entries;
+            state.count = action.payload.count;
         }
     },
   })
 
-export const { fetchArticles } = entrySlice.actions
+export const { fetchEntries } = entrySlice.actions
 export const entryReducer = entrySlice.reducer

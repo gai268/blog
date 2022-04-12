@@ -1,22 +1,35 @@
 import { Avatar, Card, CardContent, Container, Grid, Typography } from '@mui/material'
-import type { NextPage } from 'next'
+import type { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useEffect } from 'react'
 import EntryList from '../components/entry/EntryList/EntryList'
 import Header from '../components/common/Header/Header'
 import { entriesCountSelector } from '../stores/entry/selectors'
-import { fetchArticles } from '../stores/entry/slices'
+import { fetchEntries } from '../stores/entry/slices'
 import { useAppDispatch, useAppSelector } from '../stores/hooks'
+import { EntriesEntity } from '../entities/api/EntriesEntity'
 
-const Home: NextPage = () => {
+
+// サーバーサイド処理
+type ServerSideProps = { entriesEntity: EntriesEntity }
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  // Fetch data from external API
+  const res: Response = await fetch(`http://localhost:3000/api/posts`) // TODO: サンプル用
+  const entriesEntity: EntriesEntity = await res.json();
+
+  // Pass data to the page via props
+  return { props: { entriesEntity } }
+}
+
+const Home = ({entriesEntity}: ServerSideProps) => {
   const dispatch = useAppDispatch();
   const articlesCount = useAppSelector(entriesCountSelector);
 
   useEffect(() => {
-    dispatch(fetchArticles([]));
-  },[dispatch])
+    // 記事一覧読み込み
+    dispatch(fetchEntries(entriesEntity));
+  },[dispatch, entriesEntity])
 
-  
   return (
     <div>
       <Head>
