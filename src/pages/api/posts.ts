@@ -1,11 +1,11 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-export type EntriesResponse = {
+export type PostsResponse = {
   count: number,
-  entries: Entry[]
+  posts: Post[]
 }
-type Entry = {
+type Post = {
   id: string,
   title: string,
   body: string,
@@ -14,12 +14,12 @@ type Entry = {
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<EntriesResponse>
+  res: NextApiResponse<PostsResponse>
 ) {
     // TODO: dummy
-    const data: EntriesResponse = {
+    const data: PostsResponse = {
       count: 3,
-      entries: [
+      posts: [
         {
             id: "UkLwI5aowP",
             title: "タイトル3",

@@ -2,34 +2,34 @@ import { Container, Grid } from '@mui/material'
 import type { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useEffect } from 'react'
-import { EntryList } from '../components/entry/EntryList/EntryList'
+import { PostList } from '../components/post/PostList/PostList'
 import { Header } from '../components/common/Header/Header'
-import { entriesCountSelector } from '../stores/entry/selectors'
-import { fetchEntries } from '../stores/entry/slices'
+import { postsCountSelector } from '../stores/post/selectors'
+import { fetchPosts } from '../stores/post/slices'
 import { useAppDispatch, useAppSelector } from '../stores/hooks'
 import { Sidebar } from '../components/common/Sidebar/Sidebar'
-import { EntriesResponse } from './api/entries'
+import { PostsResponse } from './api/posts'
 
 
 // サーバーサイド処理
-type ServerSideProps = { entriesResponse: EntriesResponse }
+type ServerSideProps = { postsResponse: PostsResponse }
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // Fetch data from external API
-  const res: Response = await fetch(`http://localhost:3000/api/entries`) // TODO: サンプル用
-  const entriesResponse: EntriesResponse = await res.json();
+  const res: Response = await fetch(`http://localhost:3000/api/posts`) // TODO: サンプル用
+  const postsResponse: PostsResponse = await res.json();
 
   // Pass data to the page via props
-  return { props: { entriesResponse } }
+  return { props: { postsResponse: postsResponse } }
 }
 
-const Home = ({entriesResponse}: ServerSideProps) => {
+const Home = ({postsResponse: postsResponse}: ServerSideProps) => {
   const dispatch = useAppDispatch();
-  const articlesCount = useAppSelector(entriesCountSelector);
+  const articlesCount = useAppSelector(postsCountSelector);
 
   useEffect(() => {
     // 記事一覧読み込み
-    dispatch(fetchEntries(entriesResponse));
-  },[dispatch, entriesResponse])
+    dispatch(fetchPosts(postsResponse));
+  },[dispatch, postsResponse])
 
   return (
     <div>
@@ -44,7 +44,7 @@ const Home = ({entriesResponse}: ServerSideProps) => {
           <Grid item xs={12} sm={9}>
             <p>件数：{articlesCount}</p>
             {/* 記事一覧 */}
-            <EntryList></EntryList>          
+            <PostList></PostList>          
           </Grid>
           <Grid item xs={12} sm={3}>
             <Sidebar></Sidebar>

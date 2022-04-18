@@ -1,9 +1,9 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
-import { entryReducer } from './entry/slices'
+import { postReducer } from './post/slices'
 
 export function makeStore() {
   return configureStore({
-    reducer: {entry: entryReducer},
+    reducer: {post: postReducer},
   })
 }
 

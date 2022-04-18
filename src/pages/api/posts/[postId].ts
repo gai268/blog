@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-export type EntryResponse = {
+export type PostResponse = {
   id: string,
   title: string,
   body: string,
@@ -9,10 +9,10 @@ export type EntryResponse = {
 }
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<EntryResponse>
+  res: NextApiResponse<PostResponse>
 ) {
   // TODO: dummy
-  const data: EntryResponse = {
+  const data: PostResponse = {
     id: "UkLwI5aowP",
     title: "タイトル3",
     createAt: "2021-05-21T14:00:00+09:00",

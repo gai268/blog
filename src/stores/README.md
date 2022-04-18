@@ -12,7 +12,7 @@ stores
 │  ├─ selectors.ts
 │  ├─ slices.ts
 │  └─ types.ts
-├─ entry
+├─ post
 │  ├─ asyncThunks.ts
 │  ├─ selectors.ts
 │  ├─ slices.ts
@@ -50,13 +50,13 @@ store.tsには、Redux Toolkit から提供される[configureStore](https://red
 新規のストアを追加する場合は以下にreducerを追記します。
 ```ts:store.ts
 import { userReducer } from './user/slices'
-import { entryReducer } from './entry/slices'
+import { postReducer } from './post/slices'
 
 export function makeStore() {
   return configureStore({
     reducer: {
       user: userReducer,
-      entry: entryReducer
+      post: postReducer
     },
   })
 }

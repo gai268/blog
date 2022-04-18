@@ -1,15 +1,15 @@
 /**
  * ブログ記事一覧
  */
-export interface EntriesState{
+export interface PostState{
     count: number,
-    entries: Record<string, Entry>
+    posts: Record<string, Post>
 }
 
 /**
  * ブログ記事
  */
-export interface Entry {
+export interface Post {
     /**
      * 記事のタイトル
      */
