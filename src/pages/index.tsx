@@ -1,15 +1,5 @@
-import { Container, Grid } from '@mui/material'
 import type { GetServerSideProps } from 'next'
-import Head from 'next/head'
-import { useEffect } from 'react'
-import { PostList } from '../components/post/PostList/PostList'
-import { Header } from '../components/common/Header/Header'
-import { postsCountSelector } from '../stores/post/selectors'
-import { setPosts } from '../stores/post/slices'
-import { useAppDispatch, useAppSelector } from '../stores/hooks'
-import { Sidebar } from '../components/common/Sidebar/Sidebar'
 import { PostsResponse } from './api/posts'
-
 
 // サーバーサイド処理
 type ServerSideProps = { postsResponse: PostsResponse }
