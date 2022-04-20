@@ -2,7 +2,13 @@
  * ブログ記事一覧
  */
 export interface PostState{
+    /**
+     * 記事数
+     */
     count: number,
+    /**
+     * 記事一覧
+     */
     posts: Record<string, Post>
 }
 
@@ -10,6 +16,10 @@ export interface PostState{
  * ブログ記事
  */
 export interface Post {
+    /**
+     * 記事ID
+     */
+    id: string;
     /**
      * 記事のタイトル
      */

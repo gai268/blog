@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 export const addFavorite = createAsyncThunk(
     'post/addFavorite',
-    async (postKey: string, thunkAPI) => {
-        const response: Response = await fetch("/api/posts/1/favorites", {
+    async (postId: string, thunkAPI) => {
+        const response: Response = await fetch(`/api/posts/${postId}/favorites`, {
             method: "POST", 
             headers: {
                 'Accept': 'application/json',
@@ -10,6 +10,6 @@ export const addFavorite = createAsyncThunk(
             }, 
             body: JSON.stringify({hello: "world"})
         });
-        return { postKey }
+        return { postId }
     }
   )

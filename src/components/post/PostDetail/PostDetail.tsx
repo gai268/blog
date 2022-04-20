@@ -4,9 +4,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import Image from 'next/image'
 import { format } from "date-fns";
-import noImage from "./images/no_image.png";
 import { Post } from "../../../stores/post/types";
 import { useAppDispatch } from "../../../stores/hooks";
 import { addFavorite } from "../../../stores/post/asyncThunks";
@@ -16,7 +14,7 @@ type Props = {
     post: Post,
 }
 
-export const PostItem = (props: Props) => {
+export const PostDetail = (props: Props) => {
     const dispatch = useAppDispatch();
 
     const handleClickFavorite = () => {
@@ -25,9 +23,6 @@ export const PostItem = (props: Props) => {
 
     return(
         <Card elevation={0} sx={{ display: 'flex', flexWrap: 'nowrap', flexDirection: 'row' }}>
-            <CardContent sx={{ width: 151, flex: '1' }}>
-                <Image src={noImage} alt={props.post.title}/>
-            </CardContent>
             <CardContent sx={{ flex: '3' }}>
                 <Typography gutterBottom variant="h5" component="div">{props.post.title}</Typography>
                 <Typography variant="subtitle2" color="text.secondary">

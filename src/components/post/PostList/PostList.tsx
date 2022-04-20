@@ -7,9 +7,9 @@ export const PostList = () => {
     const posts = useAppSelector(postsSelector);
     return (
         <div>{
-            Object.keys(posts).map(key => {
-                const post = posts[key];
-                return post ? <PostItem key={key} postKey={key} post={post} /> : null
+            Object.keys(posts).map(postId => {
+                const post = posts[postId];
+                return post ? <PostItem key={postId} postId={postId} post={post} /> : null
             })
         }</div>
     );
