@@ -14,7 +14,7 @@ const initialState = {
 
 // Slice = State + Action Creator + Reducer
 const postSlice = createSlice({
-    name: 'article',
+    name: 'post',
     initialState,
     reducers: {
         /**

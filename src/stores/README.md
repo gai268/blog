@@ -32,7 +32,7 @@ selectors とは、state から必要な値を算出する関数のことです�
 typesファイルは、TypeScriptで記述する場合に使うファイルです。
 slice, selectors, asyncThunksで使う型を定義しておきます。
 ```ts
-export interface ArticleState {
+export interface PostState {
   title: string;
   body: string;
 }
