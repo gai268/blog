@@ -1,7 +1,6 @@
-import { v4 as uuidv4 } from 'uuid';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PostState, Post } from "./types";
-import { parseISO } from 'date-fns';
+import dayjs from 'dayjs'
 import { addFavorite } from './asyncThunks';
 import { PostsResponse } from '../../pages/api/posts';
 import { PostResponse } from '../../pages/api/posts/[postId]';
@@ -27,7 +26,7 @@ const postSlice = createSlice({
                     id: post.id,
                     title: post.title,
                     body: post.body,
-                    createAt: parseISO(post.createAt).getTime(),
+                    createAt: dayjs(post.createAt).unix(),
                     favoritesCount: 0
                 };
             }
@@ -44,7 +43,7 @@ const postSlice = createSlice({
                 id: post.id,
                 title: post.title,
                 body: post.body,
-                createAt: parseISO(post.createAt).getTime(),
+                createAt: dayjs(post.createAt).unix(),
                 favoritesCount: 0
             };
             state.posts = posts

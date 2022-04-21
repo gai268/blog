@@ -4,7 +4,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { format } from "date-fns";
+import dayjs from 'dayjs'
 import { Post } from "../../../stores/post/types";
 import { useAppDispatch } from "../../../stores/hooks";
 import { addFavorite } from "../../../stores/post/asyncThunks";
@@ -26,12 +26,11 @@ export const PostDetail = (props: Props) => {
             <CardContent sx={{ flex: '3' }}>
                 <Typography gutterBottom variant="h5" component="div">{props.post.title}</Typography>
                 <Typography variant="subtitle2" color="text.secondary">
-                    {format(props.post.createAt, 'yyyy-MM-dd')}
+                    {dayjs.unix(props.post.createAt).format('YYYY.MM.DD')}
                 </Typography>
                 <Typography variant="body1">
                     {props.post.body || "本文がありません。"}
                 </Typography>
-                <CardActions><Button size="small">Read More</Button></CardActions>
                 <IconButton onClick={handleClickFavorite}><FavoriteBorderIcon /></IconButton>
                 {props.post.favoritesCount}
             </CardContent>

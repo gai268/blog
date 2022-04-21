@@ -1,3 +1,4 @@
+import { Link } from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,11 +14,9 @@ export const Header = () => {
                 justifyContent: 'center',
                 width: '100%'
                 }}>
-            <Typography
-                variant="h6"
-                noWrap
-                component="div"
-            >Blog</Typography>
+                <Typography variant="h6" noWrap component="div">
+                    <Link href={`/`} underline="hover" color="inherit">Blog</Link>
+                </Typography>
             </Box>
         </Toolbar>
         </Container>
