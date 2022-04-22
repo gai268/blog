@@ -5,13 +5,13 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import dayjs from 'dayjs'
-import { Post } from "../../../stores/post/types";
+import { PostState } from "../../../stores/post/types";
 import { useAppDispatch } from "../../../stores/hooks";
 import { addFavorite } from "../../../stores/post/asyncThunks";
 
 type Props = {
     postId: string
-    post: Post,
+    post: PostState,
 }
 
 export const PostDetail = (props: Props) => {
@@ -26,7 +26,7 @@ export const PostDetail = (props: Props) => {
             <CardContent sx={{ flex: '3' }}>
                 <Typography gutterBottom variant="h5" component="div">{props.post.title}</Typography>
                 <Typography variant="subtitle2" color="text.secondary">
-                    {dayjs.unix(props.post.createAt).format('YYYY.MM.DD')}
+                    {dayjs.unix(props.post.publishedAt).format('YYYY.MM.DD')}
                 </Typography>
                 <Typography variant="body1">
                     {props.post.body || "本文がありません。"}

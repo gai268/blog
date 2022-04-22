@@ -6,13 +6,13 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Image from 'next/image'
 import dayjs from 'dayjs'
 import noImage from "./images/no_image.png";
-import { Post } from "../../../stores/post/types";
+import { PostState } from "../../../stores/post/types";
 import { useAppDispatch } from "../../../stores/hooks";
 import { addFavorite } from "../../../stores/post/asyncThunks";
 
 type Props = {
     postId: string
-    post: Post,
+    post: PostState,
 }
 
 export const PostItem = (props: Props) => {
@@ -36,7 +36,7 @@ export const PostItem = (props: Props) => {
                     </Link>
                 </Typography>
                 <Typography variant="subtitle2" color="text.secondary">
-                    {dayjs.unix(props.post.createAt).format('YYYY.MM.DD')}
+                    {dayjs.unix(props.post.publishedAt).format('YYYY.MM.DD')}
                 </Typography>
                 <IconButton onClick={handleClickFavorite}><FavoriteBorderIcon /></IconButton>
                 {props.post.favoritesCount}

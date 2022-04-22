@@ -1,21 +1,19 @@
-/**
- * ブログ記事一覧
- */
-export interface PostState{
+
+export type State = {
     /**
-     * 記事数
+     * 全記事数
      */
-    count: number,
+    totalCount: number,
     /**
      * 記事一覧
      */
-    posts: Record<string, Post>
+    posts: Record<string, PostState>
 }
 
 /**
- * ブログ記事
+ * ブログ記事詳細
  */
-export interface Post {
+export type PostState = {
     /**
      * 記事ID
      */
@@ -25,10 +23,10 @@ export interface Post {
      */
     title: string;
     /**
-     * 記事の作成日(Unix時間)
+     * 記事の公開日(Unix時間)
      * 注：Reduxではシリアル化できないDate型等はStateに定義できない
      */
-    createAt: number,
+    publishedAt: number,
     /**
      * 記事本文
      */
@@ -36,6 +34,18 @@ export interface Post {
     /**
      * お気に入り数
      */
-    favoritesCount: number
-    ;
+    favoritesCount: number,
+    /**
+     * アイキャッチ画像
+     */
+    eyecatch: Eyecatch
+    
+}
+/**
+ * アイキャッチ画像
+ */
+type Eyecatch = {
+    url: string,
+    height: number,
+    width: number
 }

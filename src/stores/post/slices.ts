@@ -1,15 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { PostState, Post } from "./types";
+import { State, PostState } from "./types";
 import dayjs from 'dayjs'
 import { addFavorite } from './asyncThunks';
-import { PostsResponse } from '../../pages/api/posts';
-import { PostResponse } from '../../pages/api/posts/[postId]';
+import { Posts, Post } from "../../helpers/cmsApi/types";
 
 // Stateの初期化
 const initialState = {
-    count: 0,
+    totalCount: 0,
     posts: {}
-} as PostState;
+} as State;
 
 // Slice = State + Action Creator + Reducer
 const postSlice = createSlice({
@@ -19,35 +18,45 @@ const postSlice = createSlice({
         /**
          * 記事一覧を読む
          */
-         readPosts(state, action: PayloadAction<PostsResponse>) {
-            const posts: Record<string, Post> = {}
-            for(const post of action.payload.posts){
-                posts[post.id] = {
-                    id: post.id,
-                    title: post.title,
-                    body: post.body,
-                    createAt: dayjs(post.createAt).unix(),
-                    favoritesCount: 0
+         readPosts(state, action: PayloadAction<Posts>) {
+            const posts: Record<string, PostState> = {}
+            for(const content of action.payload.contents){
+                posts[content.id] = {
+                    id: content.id,
+                    title: content.title,
+                    body: content.content,
+                    publishedAt: dayjs(content.publishedAt).unix(),
+                    favoritesCount: 0,
+                    eyecatch: {
+                        url: content.eyecatch.url,
+                        height: content.eyecatch.height,
+                        width: content.eyecatch.width
+                    }
                 };
             }
             state.posts = posts
-            state.count = action.payload.count
+            state.totalCount = action.payload.totalCount
         },
         /**
          * 記事詳細を読む
          */
-        readPost(state, action: PayloadAction<PostResponse>) {
-            const posts: Record<string, Post> = {}
-            const post: PostResponse = action.payload
+        readPost(state, action: PayloadAction<Post>) {
+            const posts: Record<string, PostState> = {}
+            const post: Post = action.payload
             posts[post.id] = {
                 id: post.id,
                 title: post.title,
-                body: post.body,
-                createAt: dayjs(post.createAt).unix(),
-                favoritesCount: 0
+                body: post.content,
+                publishedAt: dayjs(post.publishedAt).unix(),
+                favoritesCount: 0,
+                eyecatch: {
+                    url: post.eyecatch.url,
+                    height: post.eyecatch.height,
+                    width: post.eyecatch.width
+                }
             };
             state.posts = posts
-            state.count = 1
+            state.totalCount = 1
         }
     },
     extraReducers: (builder) => {

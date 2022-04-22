@@ -1,8 +1,7 @@
 import type { GetServerSideProps } from 'next'
-import { PostsResponse } from './api/posts'
 
 // サーバーサイド処理
-type ServerSideProps = { postsResponse: PostsResponse }
+type ServerSideProps = { }
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     redirect: {
@@ -12,5 +11,5 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 }
 
-const Page = ({postsResponse: postsResponse}: ServerSideProps) => {}
+const Page = ({}: ServerSideProps) => {}
 export default Page

@@ -4,31 +4,35 @@ import Head from 'next/head'
 import { useEffect } from 'react'
 import { PostList } from '../../components/post/PostList/PostList'
 import { Header } from '../../components/common/Header/Header'
-import { postsCountSelector } from '../../stores/post/selectors'
+import { postsTotalCountSelector } from '../../stores/post/selectors'
 import { readPosts } from '../../stores/post/slices'
 import { useAppDispatch, useAppSelector } from '../../stores/hooks'
 import { Sidebar } from '../../components/common/Sidebar/Sidebar'
-import { PostsResponse } from '../api/posts'
-
+import { Posts } from '../../helpers/cmsApi/types'
 
 // サーバーサイド処理
-type ServerSideProps = { postsResponse: PostsResponse }
+type ServerSideProps = { postsResponse: Posts }
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  // Fetch data from external API
-  const res: Response = await fetch(`http://localhost:3000/api/posts`) // TODO: サンプル用
-  const postsResponse: PostsResponse = await res.json();
+  // 記事一覧を取得
+  const headers = new Headers()
+  headers.set(process.env.CMS_API_KEY_HEADER_NAME || "", process.env.CMS_API_KEY_HEADER_VALUE || "")
+  const res: Response = await fetch(`${process.env.CMS_API_ENDPOINT}/posts`, {headers})
+  if(!res.ok) {
+      throw new Error(`status: ${res.status}, body: ${(await res.text()).toString()}`)
+  }
+  const postsResponse: Posts = await res.json();
 
   // Pass data to the page via props
-  return { props: { postsResponse: postsResponse } }
+  return { props: { postsResponse } }
 }
 
-const Page = ({postsResponse: postsResponse}: ServerSideProps) => {
+const Page = ({postsResponse}: ServerSideProps) => {
   const dispatch = useAppDispatch();
 
   // 記事一覧読み込み
   dispatch(readPosts(postsResponse));
   // 記事数
-  const postsCount = useAppSelector(postsCountSelector);
+  const totalCount = useAppSelector(postsTotalCountSelector);
 
   useEffect(() => {},[dispatch])
 
@@ -43,7 +47,7 @@ const Page = ({postsResponse: postsResponse}: ServerSideProps) => {
       <Container maxWidth="xl" component={'main'}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={9}>
-            <p>件数：{postsCount}</p>
+            <p>全件数：{totalCount}</p>
             {/* 記事一覧 */}
             <PostList></PostList>          
           </Grid>

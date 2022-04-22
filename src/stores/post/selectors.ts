@@ -8,10 +8,10 @@ export const postsSelector = (state: AppState) => {
 };
 
 /**
- * 記事一覧の件数
+ * 記事一覧の全件数
  */
-export const postsCountSelector = (state: AppState) => {
-    return state.post.count;
+export const postsTotalCountSelector = (state: AppState) => {
+    return state.post.totalCount;
 };
 
 /**

@@ -6,22 +6,27 @@ import { Header } from '../../components/common/Header/Header'
 import { readPost } from '../../stores/post/slices'
 import { useAppDispatch, useAppSelector } from '../../stores/hooks'
 import { Sidebar } from '../../components/common/Sidebar/Sidebar'
-import { PostResponse } from '../api/posts/[postId]'
 import { PostDetail } from '../../components/post/PostDetail/PostDetail'
 import { currentPostSelector } from '../../stores/post/selectors'
-import { Post } from '../../stores/post/types'
+import { PostState } from '../../stores/post/types'
+import { Post } from '../../helpers/cmsApi/types'
 
 
 // サーバーサイド処理
-type ServerSideProps = { postResponse: PostResponse }
+type ServerSideProps = { postResponse: Post }
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const postId = context.params?.postId;
+  const postId = context.params?.postId as string;
 
-  // Fetch data from external API
-  const res: Response = await fetch(`http://localhost:3000/api/posts/${postId}`) // TODO: サンプル用
-  const postResponse: PostResponse = await res.json();
-
-  // Pass data to the page via props
+  // 記事詳細を取得
+  const headers = new Headers()
+  headers.set(process.env.CMS_API_KEY_HEADER_NAME || "", process.env.CMS_API_KEY_HEADER_VALUE || "")
+  const res: Response = await fetch(`${process.env.CMS_API_ENDPOINT}/posts/${postId}`, {headers})
+  if(!res.ok) {
+    // 404ページを表示
+    if(res.status === 404) return {notFound: true}
+    throw new Error(`status: ${res.status}, body: ${(await res.text()).toString()}`)
+  }
+  const postResponse: Post = await res.json();
   return { props: { postResponse } }
 }
 
@@ -30,7 +35,7 @@ const Page = ({postResponse}: ServerSideProps) => {
 
   // 記事の読み込み
   dispatch(readPost(postResponse));
-  const currentPost: Post = useAppSelector(currentPostSelector);
+  const currentPost: PostState = useAppSelector(currentPostSelector);
 
   useEffect(() => {},[dispatch])
 
