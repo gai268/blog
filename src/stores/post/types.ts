@@ -38,7 +38,7 @@ export type PostState = {
     /**
      * アイキャッチ画像
      */
-    eyecatch: Eyecatch
+    eyecatch: Eyecatch | undefined
     
 }
 /**

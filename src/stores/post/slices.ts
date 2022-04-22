@@ -27,11 +27,11 @@ const postSlice = createSlice({
                     body: content.content,
                     publishedAt: dayjs(content.publishedAt).unix(),
                     favoritesCount: 0,
-                    eyecatch: {
+                    eyecatch: content.eyecatch ? {
                         url: content.eyecatch.url,
                         height: content.eyecatch.height,
                         width: content.eyecatch.width
-                    }
+                    } : undefined
                 };
             }
             state.posts = posts
@@ -49,11 +49,11 @@ const postSlice = createSlice({
                 body: post.content,
                 publishedAt: dayjs(post.publishedAt).unix(),
                 favoritesCount: 0,
-                eyecatch: {
+                eyecatch: post.eyecatch ? {
                     url: post.eyecatch.url,
                     height: post.eyecatch.height,
                     width: post.eyecatch.width
-                }
+                } : undefined
             };
             state.posts = posts
             state.totalCount = 1
