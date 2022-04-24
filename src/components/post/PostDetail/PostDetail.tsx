@@ -8,6 +8,7 @@ import dayjs from 'dayjs'
 import { PostState } from "../../../stores/post/types";
 import { useAppDispatch } from "../../../stores/hooks";
 import { addFavorite } from "../../../stores/post/asyncThunks";
+import { useEffect } from "react";
 
 type Props = {
     postId: string
@@ -28,8 +29,9 @@ export const PostDetail = (props: Props) => {
                 <Typography variant="subtitle2" color="text.secondary">
                     {dayjs.unix(props.post.publishedAt).format('YYYY.MM.DD')}
                 </Typography>
-                <Typography variant="body1">
-                    {props.post.body || "本文がありません。"}
+                <Typography 
+                    variant="body1" component={"div"} 
+                    dangerouslySetInnerHTML={{__html: props.post.body || "本文がありません。"}}>
                 </Typography>
                 <IconButton onClick={handleClickFavorite}><FavoriteBorderIcon /></IconButton>
                 {props.post.favoritesCount}
