@@ -1,4 +1,5 @@
-import { CardMedia, IconButton, Link } from "@mui/material";
+import { CardMedia, IconButton, Link, Stack } from "@mui/material";
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -35,9 +36,12 @@ export const PostItem = (props: Props) => {
                         {props.post.title}
                     </Link>
                 </Typography>
-                <Typography variant="subtitle2" color="text.secondary">
-                    {dayjs.unix(props.post.publishedAt).format('YYYY.MM.DD')}
-                </Typography>
+                <Stack direction="row" alignItems="center" gap={1}>
+                    <AccessTimeIcon color="action" fontSize="small"/>
+                    <Typography variant="subtitle2" color="text.secondary">
+                        {dayjs.unix(props.post.publishedAt).format('YYYY.MM.DD')}
+                    </Typography>
+                </Stack>
                 <IconButton onClick={handleClickFavorite}><FavoriteBorderIcon /></IconButton>
                 {props.post.favoritesCount}
             </CardContent>
