@@ -1,19 +1,7 @@
-
-export type State = {
-    /**
-     * 全記事数
-     */
-    totalCount: number,
-    /**
-     * 記事一覧
-     */
-    posts: Record<string, PostState>
-}
-
 /**
  * ブログ記事詳細
  */
-export type PostState = {
+export type Post = {
     /**
      * 記事ID
      */
