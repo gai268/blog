@@ -7,8 +7,8 @@ import { Header } from '../../components/common/Header/Header'
 import { postsReceived } from '../../stores/posts/slices'
 import { useAppDispatch, useAppSelector } from '../../stores/hooks'
 import { Sidebar } from '../../components/common/Sidebar/Sidebar'
-import { PostsResponse, UserResponse } from '../../helpers/cmsApiClient/types'
-import { cmsApiClient } from '../../helpers/cmsApiClient'
+import { PostsResponse, UserResponse } from '../../helpers/apis/cmsApi/types'
+import { cmsApi } from '../../helpers/apis/cmsApi'
 import { postsIdsSelector } from '../../stores/posts/selectors'
 import { userReceived } from '../../stores/user/slices'
 import { linksReceived } from '../../stores/links/slices'
@@ -20,9 +20,9 @@ type ServerSideProps = {
 }
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // 投稿一覧を取得
-  const postsResponse = await cmsApiClient.fetchPosts()
+  const postsResponse = await cmsApi.fetchPosts()
   // ユーザ情報を取得
-  const userResponse = await cmsApiClient.fetchUser()
+  const userResponse = await cmsApi.fetchUser()
   return { props: { postsResponse, userResponse } }
 }
 

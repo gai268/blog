@@ -7,9 +7,9 @@ import { postReceived } from '../../stores/posts/slices'
 import { useAppDispatch, useAppSelector } from '../../stores/hooks'
 import { Sidebar } from '../../components/common/Sidebar/Sidebar'
 import { PostDetail } from '../../components/post/PostDetail/PostDetail'
-import { PostResponse as PostResponse } from '../../helpers/cmsApiClient/types'
-import { cmsApiClient } from '../../helpers/cmsApiClient'
-import { HttpStatusError } from '../../helpers/cmsApiClient/errors'
+import { PostResponse as PostResponse } from '../../helpers/apis/cmsApi/types'
+import { cmsApi } from '../../helpers/apis/cmsApi'
+import { AxiosError } from 'axios'
 
 
 // サーバーサイド処理
@@ -18,14 +18,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const postId = context.params?.postId as string;
   try {
     // 投稿を取得する
-    const postResponse: PostResponse = await cmsApiClient.fetchPost(postId);
+    const postResponse: PostResponse = await cmsApi.fetchPost(postId);
     return { props: { postResponse } }
-  } catch (error) {
-    if(error instanceof HttpStatusError){
+  } catch (e) {
+    if(e instanceof AxiosError && e.isAxiosError){
       // 404ページを表示
-      if(error.statusCode === 404) return {notFound: true}
+      if(e.response?.status === 404) return {notFound: true}
     }
-    throw error;
+    throw e;
   }
 }
 

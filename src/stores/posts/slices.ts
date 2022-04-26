@@ -2,7 +2,7 @@ import { createEntityAdapter, createSlice, PayloadAction } from "@reduxjs/toolki
 import { Post } from "./types";
 import dayjs from 'dayjs'
 import { addFavorite } from './asyncThunks';
-import { PostsResponse, PostResponse } from "../../helpers/cmsApiClient/types";
+import { PostsResponse, PostResponse } from "../../helpers/apis/cmsApi/types";
 
 // Stateのアダプター
 const postsAdapter = createEntityAdapter<Post>()

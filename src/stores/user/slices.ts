@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { User } from "./types";
 import dayjs from 'dayjs'
-import { UserResponse } from "../../helpers/cmsApiClient/types";
+import { UserResponse } from "../../helpers/apis/cmsApi/types";
 
 
 // Stateの初期化

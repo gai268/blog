@@ -1,5 +1,5 @@
 import { createEntityAdapter, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { LinkResponse } from "../../helpers/cmsApiClient/types";
+import { LinkResponse } from "../../helpers/apis/cmsApi/types";
 import { Link } from "./types";
 
 // Stateのアダプター
