@@ -5,7 +5,7 @@
 /**
  * 画像情報
  */
-type Image = {
+type ImageResponse = {
     url: string,
     height: number,
     width: number
@@ -14,8 +14,8 @@ type Image = {
 /**
  * 投稿一覧情報
  */
-export type Posts = {
-    contents: Post[]
+export type PostsResponse = {
+    contents: PostResponse[]
     totalCount: number,
     offset: number,
     limit: number
@@ -23,15 +23,15 @@ export type Posts = {
 /**
  * 投稿情報
  */
-export type Post = {
+export type PostResponse = {
     id: string,
     publishedAt: string
     title: string,
     content: string,
-    eyecatch: Image,
-    category: Category
+    eyecatch: ImageResponse,
+    category: CategoryResponse
 }
-type Category = {
+type CategoryResponse = {
     id: string,
     name: string
 }
@@ -39,14 +39,19 @@ type Category = {
 /**
  * ユーザー情報
  */
-export type User = {
+export type UserResponse = {
     name: string,
     description: string | undefined,
-    avatar: Image | undefined
-    links: Link[]
+    avatar: ImageResponse | undefined
+    links: LinkResponse[]
 }
-type Link = {
+
+/**
+ * 関連リンク情報
+ */
+export type LinkResponse = {
+    fieldId: string,
     url: string,
     text: string,
-    icon: Image
+    icon: ImageResponse
 }

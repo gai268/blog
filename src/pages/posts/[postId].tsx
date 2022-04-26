@@ -7,7 +7,7 @@ import { postReceived } from '../../stores/posts/slices'
 import { useAppDispatch, useAppSelector } from '../../stores/hooks'
 import { Sidebar } from '../../components/common/Sidebar/Sidebar'
 import { PostDetail } from '../../components/post/PostDetail/PostDetail'
-import { Post as PostResponse } from '../../helpers/cmsApiClient/types'
+import { PostResponse as PostResponse } from '../../helpers/cmsApiClient/types'
 import { cmsApiClient } from '../../helpers/cmsApiClient'
 import { HttpStatusError } from '../../helpers/cmsApiClient/errors'
 

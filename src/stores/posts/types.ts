@@ -1,3 +1,5 @@
+import { EntityId } from "@reduxjs/toolkit";
+
 /**
  * ブログ記事詳細
  */
@@ -5,7 +7,7 @@ export type Post = {
     /**
      * 記事ID
      */
-    id: string;
+    id: EntityId;
     /**
      * 記事のタイトル
      */

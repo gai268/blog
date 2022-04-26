@@ -1,4 +1,5 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
+import { linksReducer } from './links/slices'
 import { postsReducer } from './posts/slices'
 import { userReducer } from './user/slices'
 
@@ -6,7 +7,8 @@ export function makeStore() {
   return configureStore({
     reducer: {
       posts: postsReducer,
-      user: userReducer
+      user: userReducer,
+      links: linksReducer
     },
   })
 }

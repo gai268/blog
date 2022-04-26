@@ -2,7 +2,7 @@ import { createEntityAdapter, createSlice, PayloadAction } from "@reduxjs/toolki
 import { Post } from "./types";
 import dayjs from 'dayjs'
 import { addFavorite } from './asyncThunks';
-import { Posts as PostsResponse, Post as PostResponse } from "../../helpers/cmsApiClient/types";
+import { PostsResponse, PostResponse } from "../../helpers/cmsApiClient/types";
 
 // Stateのアダプター
 const postsAdapter = createEntityAdapter<Post>()
@@ -35,7 +35,7 @@ const postsSlice = createSlice({
             }))
         },
         /**
-         * 記事1件を読み込み
+         * 記事1件の読み込み
          */
         postReceived(state, action: PayloadAction<PostResponse>) {
             const post: PostResponse = action.payload

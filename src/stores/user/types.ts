@@ -11,45 +11,12 @@ export type User = {
     /**
      * ユーザー説明文
      */
-    discription: string | undefined,
-    /**
-     * リンク一覧
-     */
-    links: Record<string, Link>
+    discription: string | undefined
 }
 /**
  * アバター画像
  */
 type Avatar = {
-    url: string,
-    height: number,
-    width: number
-}
-/**
- * リンク情報
- */
-export type Link = {
-    /**
-     * リンクID
-     */
-    id: string,
-    /**
-     * リンクテキスト
-     */
-    text: string,
-     /**
-     * リンクURL
-     */
-    url: string,
-    /**
-     * アイコン画像
-     */
-    icon: Icon
-}
-/**
- * アイコン画像
- */
-type Icon = {
     url: string,
     height: number,
     width: number

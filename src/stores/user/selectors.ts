@@ -20,11 +20,3 @@ export const userNameSelector = (state: AppState) => {
  export const userDiscriptionSelector = (state: AppState) => {
     return state.user.discription;
 };
-
-/**
- * ユーザーのリンク一覧
- */
- export const userLinksSelector = (state: AppState) => {
-    return state.user.links;
-};
-

@@ -1,44 +1,31 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User, Link } from "./types";
+import { User } from "./types";
 import dayjs from 'dayjs'
-import { Posts, Post } from "../../helpers/cmsApiClient/types";
+import { UserResponse } from "../../helpers/cmsApiClient/types";
+
 
 // Stateの初期化
 const initialState = {
-    name: "ユーザー名",
-    links: {}
+    name: "ユーザー名"
 } as User;
 
 // Slice = State + Action Creator + Reducer
-const postSlice = createSlice({
-    name: 'post',
+const userSlice = createSlice({
+    name: 'user',
     initialState,
     reducers: {
         /**
-         * ユーザー情報を読み込む
+         * ユーザー情報の読み込み
          */
-         readUser(state, action: PayloadAction<Posts>) {
-            // const posts: Record<string, Link> = {}
-            // for(const content of action.payload.contents){
-            //     posts[content.id] = {
-            //         id: content.id,
-            //         title: content.title,
-            //         body: content.content,
-            //         publishedAt: dayjs(content.publishedAt).unix(),
-            //         favoritesCount: 0,
-            //         eyecatch: content.eyecatch ? {
-            //             url: content.eyecatch.url,
-            //             height: content.eyecatch.height,
-            //             width: content.eyecatch.width
-            //         } : undefined
-            //     };
-            // }
-            // state.posts = posts
-            // state.totalCount = action.payload.totalCount
+         userReceived(state, action: PayloadAction<UserResponse>) {
+            const userResponse = action.payload;
+            state.name = userResponse.name
+            state.discription = userResponse.description
+            state.avatar = userResponse.avatar
         }
     },
     extraReducers: (builder) => {},
   })
 
-export const { readUser } = postSlice.actions
-export const userReducer = postSlice.reducer
+export const { userReceived } = userSlice.actions
+export const userReducer = userSlice.reducer
