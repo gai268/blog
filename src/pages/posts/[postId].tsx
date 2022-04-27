@@ -7,19 +7,28 @@ import { postReceived } from '../../stores/posts/slices'
 import { useAppDispatch, useAppSelector } from '../../stores/hooks'
 import { Sidebar } from '../../components/common/Sidebar/Sidebar'
 import { PostDetail } from '../../components/post/PostDetail/PostDetail'
-import { PostResponse as PostResponse } from '../../helpers/apis/cmsApi/types'
+import { PostResponse as PostResponse, UserResponse } from '../../helpers/apis/cmsApi/types'
 import { cmsApi } from '../../helpers/apis/cmsApi'
 import { AxiosError } from 'axios'
+import { userReceived } from '../../stores/user/slices'
+import { linksReceived } from '../../stores/links/slices'
 
 
 // サーバーサイド処理
-type ServerSideProps = { postResponse: PostResponse }
+type ServerSideProps = { 
+  postResponse: PostResponse,
+  userResponse: UserResponse
+}
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const postId = context.params?.postId as string;
   try {
-    // 投稿を取得する
-    const postResponse: PostResponse = await cmsApi.fetchPost(postId);
-    return { props: { postResponse } }
+    const [postResponse, userResponse] = await Promise.all([
+      // 投稿を取得
+      cmsApi.fetchPost(postId),
+      // ユーザ情報を取得
+      cmsApi.fetchUser()
+    ])
+    return { props: { postResponse, userResponse } }
   } catch (e) {
     if(e instanceof AxiosError && e.isAxiosError){
       // 404ページを表示
@@ -29,11 +38,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 }
 
-const Page = ({postResponse}: ServerSideProps) => {
+const Page = ({postResponse, userResponse}: ServerSideProps) => {
   const dispatch = useAppDispatch();
 
   // 記事の読み込み
   dispatch(postReceived(postResponse));
+  // ユーザー情報
+  dispatch(userReceived(userResponse))
+  // 関連リンク一覧情報
+  dispatch(linksReceived(userResponse.links))
+  
 
   const postId = postResponse.id
 

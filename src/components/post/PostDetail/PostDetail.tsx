@@ -1,4 +1,4 @@
-import { CardActions, IconButton, Stack } from "@mui/material";
+import { CardActions, CardHeader, IconButton, Stack } from "@mui/material";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -28,17 +28,19 @@ export const PostDetail = (props: Props) => {
     }
 
     return(
-        <Card elevation={0} sx={{ display: 'flex', flexWrap: 'nowrap', flexDirection: 'row' }}>
-            <CardContent sx={{ flex: '3' }}>
-                <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 'bold' }}>
-                    {post?.title}
-                </Typography>
-                <Stack direction="row" alignItems="center" gap={1}>
-                    <AccessTimeIcon color="action" fontSize="small"/>
-                    <Typography variant="subtitle2" color="text.secondary">
-                        {post ? dayjs.unix(post.publishedAt).format('YYYY.MM.DD') : "-"}
-                    </Typography>
-                </Stack>
+        <Card elevation={0}>
+            <CardHeader sx={{ fontWeight: 'bold' }} 
+                title={post?.title}
+                subheader={
+                    <Stack direction="row" alignItems="center" gap={1}>
+                        <AccessTimeIcon color="action" fontSize="small"/>
+                        <Typography variant="subtitle2" color="text.secondary">
+                            {post ? dayjs.unix(post.publishedAt).format('YYYY.MM.DD') : "-"}
+                        </Typography>
+                    </Stack>
+                }
+            />
+            <CardContent>  
                 <Typography 
                     variant="body1" component={"div"} 
                     dangerouslySetInnerHTML={{__html: post?.body || "本文がありません。"}}>

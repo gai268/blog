@@ -19,10 +19,12 @@ type ServerSideProps = {
   userResponse: UserResponse
 }
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  // 投稿一覧を取得
-  const postsResponse = await cmsApi.fetchPosts()
-  // ユーザ情報を取得
-  const userResponse = await cmsApi.fetchUser()
+  const [postsResponse, userResponse] = await Promise.all([
+    // 投稿一覧を取得
+    cmsApi.fetchPosts(),
+    // ユーザ情報を取得
+    cmsApi.fetchUser()
+  ])
   return { props: { postsResponse, userResponse } }
 }
 
