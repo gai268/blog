@@ -17,15 +17,25 @@ class ErrorBoundary extends React.Component<Props, State> {
     hasError: false
   };
 
+  /**
+   * このライフサイクルはフォールバック UI を描画するために使用されます
+   */
   public static getDerivedStateFromError(error: Error): State {
     // Update state so the next render will show the fallback UI.
     return { hasError: true };
   }
 
+  /**
+   * このライフサイクルは主にロギングなどの処理に使用されます
+   */
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error("Uncaught error:", error, errorInfo);
   }
 
+  /**
+   * getDerivedStateFromError によってエラーをキャッチした状態であるならば、
+   * フォールバック UI を描画するようにします
+   */
   public render() {
     if (this.state.hasError) {
       return <h1>Sorry.. there was an error</h1>;

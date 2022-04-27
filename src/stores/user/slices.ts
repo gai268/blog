@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { User } from "./types";
-import dayjs from 'dayjs'
 import { UserResponse } from "../../helpers/apis/cmsApi/types";
 
 

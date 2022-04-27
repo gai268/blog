@@ -39,7 +39,6 @@ const Page = ({postsResponse, userResponse}: ServerSideProps) => {
   dispatch(linksReceived(userResponse.links))
 
   const postsIds = useAppSelector(postsIdsSelector);
-
   useEffect(() => {},[dispatch, postsIds])
 
   return (

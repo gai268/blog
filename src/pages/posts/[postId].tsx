@@ -1,5 +1,5 @@
 import { Container, Grid } from '@mui/material'
-import type { GetServerSideProps } from 'next'
+import type { GetServerSideProps, GetServerSidePropsResult } from 'next'
 import Head from 'next/head'
 import { useEffect } from 'react'
 import { Header } from '../../components/common/Header/Header'
@@ -21,21 +21,21 @@ type ServerSideProps = {
 }
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const postId = context.params?.postId as string;
-  try {
-    const [postResponse, userResponse] = await Promise.all([
-      // 投稿を取得
-      cmsApi.fetchPost(postId),
-      // ユーザ情報を取得
-      cmsApi.fetchUser()
-    ])
-    return { props: { postResponse, userResponse } }
-  } catch (e) {
-    if(e instanceof AxiosError && e.isAxiosError){
-      // 404ページを表示
-      if(e.response?.status === 404) return {notFound: true}
-    }
-    throw e;
-  }
+  const [postResponse, userResponse] = await Promise.all([
+    // 投稿を取得
+    cmsApi.fetchPost(postId).catch(e => {
+      if(e instanceof AxiosError && e.isAxiosError){
+        // 存在しない投稿IDであった場合
+        if(e.response?.status === 404) return null
+      }
+      throw e
+    }),
+    // ユーザ情報を取得
+    cmsApi.fetchUser()
+  ])
+  // 記事が存在しないので404ページを表示
+  if(!postResponse) return {notFound: true}
+  return { props: { postResponse, userResponse } }
 }
 
 const Page = ({postResponse, userResponse}: ServerSideProps) => {
@@ -47,10 +47,8 @@ const Page = ({postResponse, userResponse}: ServerSideProps) => {
   dispatch(userReceived(userResponse))
   // 関連リンク一覧情報
   dispatch(linksReceived(userResponse.links))
-  
 
   const postId = postResponse.id
-
   useEffect(() => {},[dispatch])
 
   return (
