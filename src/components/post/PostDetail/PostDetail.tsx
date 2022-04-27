@@ -18,9 +18,11 @@ type Props = {
 export const PostDetail = (props: Props) => {
     const dispatch = useAppDispatch();
 
+    // selectors
     const postBy = useAppSelector(postBySelector);
     const post = postBy({id: props.postId})
 
+    // handlers
     const handleClickFavorite = () => {
         dispatch(addFavorite(props.postId))
     }
