@@ -1,6 +1,7 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import { linksReducer } from './links/slices'
 import { postsReducer } from './posts/slices'
+import { siteReducer } from './site/slices'
 import { userReducer } from './user/slices'
 
 export function makeStore() {
@@ -8,7 +9,8 @@ export function makeStore() {
     reducer: {
       posts: postsReducer,
       user: userReducer,
-      links: linksReducer
+      links: linksReducer,
+      site: siteReducer
     },
   })
 }

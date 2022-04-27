@@ -7,36 +7,40 @@ import { Header } from '../../components/common/Header/Header'
 import { postsReceived } from '../../stores/posts/slices'
 import { useAppDispatch, useAppSelector } from '../../stores/hooks'
 import { Sidebar } from '../../components/common/Sidebar/Sidebar'
-import { PostsResponse, UserResponse } from '../../helpers/apis/cmsApi/types'
+import { PostsResponse, SiteResponse } from '../../helpers/apis/cmsApi/types'
 import { cmsApi } from '../../helpers/apis/cmsApi'
 import { postsIdsSelector } from '../../stores/posts/selectors'
 import { userReceived } from '../../stores/user/slices'
 import { linksReceived } from '../../stores/links/slices'
+import { siteReceived } from '../../stores/site/slices'
 
 // サーバーサイド処理
 type ServerSideProps = { 
   postsResponse: PostsResponse, 
-  userResponse: UserResponse
+  siteResponse: SiteResponse
 }
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const [postsResponse, userResponse] = await Promise.all([
+  // 並列処理
+  const [postsResponse, siteResponse] = await Promise.all([
     // 投稿一覧を取得
     cmsApi.fetchPosts(),
-    // ユーザ情報を取得
-    cmsApi.fetchUser()
+    // サイト情報を取得
+    cmsApi.fetchSite()
   ])
-  return { props: { postsResponse, userResponse } }
+  return { props: { postsResponse, siteResponse } }
 }
 
-const Page = ({postsResponse, userResponse}: ServerSideProps) => {
+const Page = ({postsResponse, siteResponse}: ServerSideProps) => {
   const dispatch = useAppDispatch()
 
   // 記事一覧
   dispatch(postsReceived(postsResponse))
-  // ユーザー情報
-  dispatch(userReceived(userResponse))
-  // 関連リンク一覧情報
-  dispatch(linksReceived(userResponse.links))
+  // サイト情報を読み込む
+  dispatch(siteReceived(siteResponse))
+  // ユーザー情報を読み込む
+  dispatch(userReceived(siteResponse))
+  // 関連リンク一覧情報を読み込む
+  dispatch(linksReceived(siteResponse.links))
 
   const postsIds = useAppSelector(postsIdsSelector);
   useEffect(() => {},[dispatch, postsIds])

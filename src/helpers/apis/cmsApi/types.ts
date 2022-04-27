@@ -37,12 +37,14 @@ type CategoryResponse = {
 }
 
 /**
- * ユーザー情報
+ * サイト情報
  */
-export type UserResponse = {
-    name: string,
-    description: string | undefined,
-    avatar: ImageResponse | undefined
+export type SiteResponse = {
+    metaTitle: string,
+    metaDescription: string | undefined,
+    userName: string,
+    userDescription: string | undefined,
+    userAvatar: ImageResponse | undefined
     links: LinkResponse[]
 }
 

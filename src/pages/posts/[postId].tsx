@@ -7,21 +7,23 @@ import { postReceived } from '../../stores/posts/slices'
 import { useAppDispatch, useAppSelector } from '../../stores/hooks'
 import { Sidebar } from '../../components/common/Sidebar/Sidebar'
 import { PostDetail } from '../../components/post/PostDetail/PostDetail'
-import { PostResponse as PostResponse, UserResponse } from '../../helpers/apis/cmsApi/types'
+import { PostResponse as PostResponse, SiteResponse } from '../../helpers/apis/cmsApi/types'
 import { cmsApi } from '../../helpers/apis/cmsApi'
 import { AxiosError } from 'axios'
 import { userReceived } from '../../stores/user/slices'
 import { linksReceived } from '../../stores/links/slices'
+import { siteReceived } from '../../stores/site/slices'
 
 
 // サーバーサイド処理
 type ServerSideProps = { 
   postResponse: PostResponse,
-  userResponse: UserResponse
+  siteResponse: SiteResponse
 }
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const postId = context.params?.postId as string;
-  const [postResponse, userResponse] = await Promise.all([
+  // 並列処理
+  const [postResponse, siteResponse] = await Promise.all([
     // 投稿を取得
     cmsApi.fetchPost(postId).catch(e => {
       if(e instanceof AxiosError && e.isAxiosError){
@@ -30,23 +32,25 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       }
       throw e
     }),
-    // ユーザ情報を取得
-    cmsApi.fetchUser()
+    // サイト情報を取得
+    cmsApi.fetchSite()
   ])
   // 記事が存在しないので404ページを表示
   if(!postResponse) return {notFound: true}
-  return { props: { postResponse, userResponse } }
+  return { props: { postResponse, siteResponse } }
 }
 
-const Page = ({postResponse, userResponse}: ServerSideProps) => {
+const Page = ({postResponse, siteResponse}: ServerSideProps) => {
   const dispatch = useAppDispatch();
 
   // 記事の読み込み
   dispatch(postReceived(postResponse));
+  // サイト情報を読み込む
+  dispatch(siteReceived(siteResponse))
   // ユーザー情報
-  dispatch(userReceived(userResponse))
+  dispatch(userReceived(siteResponse))
   // 関連リンク一覧情報
-  dispatch(linksReceived(userResponse.links))
+  dispatch(linksReceived(siteResponse.links))
 
   const postId = postResponse.id
   useEffect(() => {},[dispatch])

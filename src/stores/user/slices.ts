@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { User } from "./types";
-import { UserResponse } from "../../helpers/apis/cmsApi/types";
+import { SiteResponse } from "../../helpers/apis/cmsApi/types";
 
 
 // Stateの初期化
@@ -16,11 +16,11 @@ const userSlice = createSlice({
         /**
          * ユーザー情報の読み込み
          */
-         userReceived(state, action: PayloadAction<UserResponse>) {
-            const userResponse = action.payload;
-            state.name = userResponse.name
-            state.discription = userResponse.description
-            state.avatar = userResponse.avatar
+         userReceived(state, action: PayloadAction<SiteResponse>) {
+            const siteResponse = action.payload;
+            state.name = siteResponse.userName
+            state.discription = siteResponse.userDescription
+            state.avatar = siteResponse.userAvatar
         }
     },
     extraReducers: (builder) => {},

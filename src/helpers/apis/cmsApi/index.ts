@@ -1,4 +1,4 @@
-import { PostResponse, PostsResponse, UserResponse } from './types'
+import { PostResponse, PostsResponse, SiteResponse } from './types'
 import axios, { AxiosRequestHeaders } from 'axios';
 import axiosRetry from 'axios-retry';
 
@@ -40,12 +40,12 @@ export const cmsApi = {
     },
 
     /**
-     * ユーザー情報を取得する
+     * サイト情報を取得する
      */
-    fetchUser: async (): Promise<UserResponse> => {
-        const response = await client.get(`/user`, {'axios-retry': { retries: 2 }})
-        const user: UserResponse = response.data
-        return user
+    fetchSite: async (): Promise<SiteResponse> => {
+        const response = await client.get(`/site`, {'axios-retry': { retries: 2 }})
+        const site: SiteResponse = response.data
+        return site
 
     }
     
