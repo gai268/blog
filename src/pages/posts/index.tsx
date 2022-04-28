@@ -1,4 +1,4 @@
-import { Box, Container, Grid } from '@mui/material'
+import { Box, Card, Container, Grid } from '@mui/material'
 import type { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { PostItem } from '../../components/post/PostItem/PostItem'
@@ -16,6 +16,7 @@ import { postsPaginationReceived } from '../../stores/pagination/slices'
 import { PostsPagination } from '../../components/post/PostsPagination/PostsPagination'
 import { siteNameSelector } from '../../stores/site/selectors'
 import { useEffect, useState } from 'react'
+import { NotExistItem } from '../../components/post/NotExistItem/NotExistItem'
 
 // サーバーサイド処理
 type ServerSideProps = { 
@@ -79,11 +80,16 @@ const Page = ({page, postsResponse, siteResponse}: ServerSideProps) => {
         <Container maxWidth="xl" component={'main'}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={9}>
-              {/* 記事一覧 */}
-              {postsIds.map(postId => <PostItem key={postId} postId={postId} />)}
-              <Grid container justifyContent={"center"} marginTop={1}>
-                <Grid item><PostsPagination/></Grid>   
-              </Grid>
+              {postsIds.length === 0 ? <NotExistItem/> : postsIds.map(postId => {
+                return (<>
+                  {/* 記事一覧 */}
+                  <PostItem key={postId} postId={postId} />
+                  {/* ページネーション */}
+                  <Grid container justifyContent={"center"} marginTop={1}>
+                    <Grid item><PostsPagination/></Grid>
+                  </Grid>
+                </>)
+              })}
             </Grid>
             <Grid item xs={12} sm={3}>
               <Sidebar></Sidebar>
