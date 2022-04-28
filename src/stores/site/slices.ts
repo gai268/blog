@@ -4,9 +4,7 @@ import { SiteResponse } from "../../helpers/apis/cmsApi/types";
 
 
 // Stateの初期化
-const initialState = {
-    siteName: "No Title"
-} as Site;
+const initialState = {} as Site;
 
 // Slice = State + Action Creator + Reducer
 const siteSlice = createSlice({

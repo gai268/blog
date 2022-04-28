@@ -5,7 +5,7 @@ export type Site = {
     /**
      * Webサイト名
      */
-    siteName: string
+    siteName?: string
     /**
      * Webサイト説明文
      */

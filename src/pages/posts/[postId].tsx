@@ -70,7 +70,7 @@ const Page = ({postResponse, siteResponse}: ServerSideProps) => {
   return (
     <>
       <Head>
-        <title>{post?.title} | {siteName}</title>
+        <title>{isLoaded ? `${post?.title} | ${siteName}` : ''}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Box sx={{display: isLoaded ? undefined: "none"}}>
