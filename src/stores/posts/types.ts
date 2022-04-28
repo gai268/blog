@@ -7,35 +7,35 @@ export type Post = {
     /**
      * 記事ID
      */
-    id: EntityId;
+    id: EntityId
     /**
      * 記事のタイトル
      */
-    title: string;
+    title: string
     /**
      * 記事の公開日(Unix時間)
      * 注：Reduxではシリアル化できないDate型等はStateに定義できない
      */
-    publishedAt: number,
+    publishedAt: number
     /**
      * 記事本文
      */
-    body: string,
+    body: string
     /**
      * お気に入り数
      */
-    favoritesCount: number,
+    favoritesCount: number
     /**
      * アイキャッチ画像
      */
-    eyecatch: Eyecatch | undefined
+    eyecatch?: Eyecatch
     
 }
 /**
  * アイキャッチ画像
  */
 type Eyecatch = {
-    url: string,
-    height: number,
+    url: string
+    height: number
     width: number
 }

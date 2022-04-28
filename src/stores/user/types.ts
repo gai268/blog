@@ -10,11 +10,11 @@ export type User = {
     /**
      * アバター画像
      */
-    avatar: Avatar | undefined,
+    avatar?: Avatar,
     /**
      * ユーザー説明文
      */
-    discription: string | undefined
+    discription?: string
 }
 /**
  * アバター画像

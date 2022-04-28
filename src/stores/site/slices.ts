@@ -5,7 +5,7 @@ import { SiteResponse } from "../../helpers/apis/cmsApi/types";
 
 // Stateの初期化
 const initialState = {
-    metaTitle: "No Title"
+    siteName: "No Title"
 } as Site;
 
 // Slice = State + Action Creator + Reducer
@@ -18,8 +18,8 @@ const siteSlice = createSlice({
          */
          siteReceived(state, action: PayloadAction<SiteResponse>) {
             const siteResponse = action.payload;
-            state.metaTitle = siteResponse.metaTitle
-            state.metaDescription = siteResponse.metaDescription
+            state.siteName = siteResponse.siteName
+            state.siteDescription = siteResponse.siteDescription
         }
     },
     extraReducers: (builder) => {},

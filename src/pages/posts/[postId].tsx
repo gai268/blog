@@ -1,7 +1,7 @@
 import { Container, Grid } from '@mui/material'
 import type { GetServerSideProps, GetServerSidePropsResult } from 'next'
 import Head from 'next/head'
-import { useEffect } from 'react'
+import { useEffect, useLayoutEffect } from 'react'
 import { Header } from '../../components/common/Header/Header'
 import { postReceived } from '../../stores/posts/slices'
 import { useAppDispatch, useAppSelector } from '../../stores/hooks'
@@ -13,6 +13,8 @@ import { AxiosError } from 'axios'
 import { userReceived } from '../../stores/user/slices'
 import { linksReceived } from '../../stores/links/slices'
 import { siteReceived } from '../../stores/site/slices'
+import { siteNameSelector } from '../../stores/site/selectors'
+import { postBySelector } from '../../stores/posts/selectors'
 
 
 // サーバーサイド処理
@@ -43,23 +45,27 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const Page = ({postResponse, siteResponse}: ServerSideProps) => {
   const dispatch = useAppDispatch();
 
-  // 記事の読み込み
-  dispatch(postReceived(postResponse));
-  // サイト情報を読み込む
-  dispatch(siteReceived(siteResponse))
-  // ユーザー情報
-  dispatch(userReceived(siteResponse))
-  // 関連リンク一覧情報
-  dispatch(linksReceived(siteResponse.links))
+  // 初期化処理
+  useLayoutEffect(() => {
+    // 記事の読み込み
+    dispatch(postReceived(postResponse));
+    // サイト情報を読み込む
+    dispatch(siteReceived(siteResponse))
+    // ユーザー情報
+    dispatch(userReceived(siteResponse))
+    // 関連リンク一覧情報
+    dispatch(linksReceived(siteResponse.links))
+  }, [dispatch, postResponse, siteResponse])
 
   const postId = postResponse.id
-  useEffect(() => {},[dispatch])
-
+  const siteName = useAppSelector(siteNameSelector);
+  const postBy = useAppSelector(postBySelector);
+  const post = postBy({id: postId})
+  
   return (
     <div>
       <Head>
-        <title>ブログ</title>
-        <meta name="description" content="~~についてのブログです。" />
+        <title>{post?.title} | {siteName}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header/>

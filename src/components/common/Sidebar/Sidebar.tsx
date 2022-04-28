@@ -44,7 +44,7 @@ export const Sidebar = () => {
                 label={link?.text}
                 variant="outlined"
                 clickable
-            />
+              />
             })}
           </Stack> 
         </CardContent>            

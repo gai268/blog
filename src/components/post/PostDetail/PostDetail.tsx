@@ -5,11 +5,11 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import dayjs from 'dayjs'
-import { Post } from "../../../stores/posts/types";
 import { useAppDispatch, useAppSelector } from "../../../stores/hooks";
 import { addFavorite } from "../../../stores/posts/asyncThunks";
 import { EntityId } from "@reduxjs/toolkit";
 import { postBySelector } from "../../../stores/posts/selectors";
+import { useEffect } from "react";
 
 type Props = {
     postId: EntityId

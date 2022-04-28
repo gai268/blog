@@ -1,9 +1,30 @@
+/*
+ーーーーーーーーー 
+リクエストパラメータ系
+ーーーーーーーーー 
+*/
 /**
- * CMS APIのリクエスト・レスポンスのエンティティ
+ * 投稿一覧取得APIのパラメータ
  */
+export type FetchPostsParams = {
+    /**
+     * 投稿の取得件数。指定しない場合のデフォルト値は10です。
+     */
+    limit?: number,
 
+    /**
+     * 何件目から取得するか。デフォルト値は0です。
+     */
+    offset?: number
+}
+
+/*
+ーーーーーーーーー 
+レスポンス系
+ーーーーーーーーー 
+*/
 /**
- * 画像情報
+ * 画像情報レスポンス
  */
 type ImageResponse = {
     url: string,
@@ -12,7 +33,7 @@ type ImageResponse = {
 }
 
 /**
- * 投稿一覧情報
+ * 投稿一覧情報レスポンス
  */
 export type PostsResponse = {
     contents: PostResponse[]
@@ -21,7 +42,7 @@ export type PostsResponse = {
     limit: number
 }
 /**
- * 投稿情報
+ * 投稿情報レスポンス
  */
 export type PostResponse = {
     id: string,
@@ -37,23 +58,23 @@ type CategoryResponse = {
 }
 
 /**
- * サイト情報
+ * サイト情報レスポンス
  */
 export type SiteResponse = {
-    metaTitle: string,
-    metaDescription: string | undefined,
-    userName: string,
-    userDescription: string | undefined,
-    userAvatar: ImageResponse | undefined
+    siteName: string
+    siteDescription?: string
+    userName: string
+    userDescription?: string
+    userAvatar?: ImageResponse
     links: LinkResponse[]
 }
 
 /**
- * 関連リンク情報
+ * 関連リンク情報レスポンス
  */
 export type LinkResponse = {
-    fieldId: string,
-    url: string,
-    text: string,
+    fieldId: string
+    url: string
+    text: string
     icon: ImageResponse
 }

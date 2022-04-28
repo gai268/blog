@@ -5,26 +5,23 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import React from "react";
 import { useAppSelector } from "../../../stores/hooks";
-import { metaDescriptionSelector, metaTitleSelector } from "../../../stores/site/selectors";
+import { siteDescriptionSelector, siteNameSelector } from "../../../stores/site/selectors";
 export const Header = () => {
-    const metaTitle = useAppSelector(metaTitleSelector);
-    const metaDescription = useAppSelector(metaDescriptionSelector);
+    const siteName = useAppSelector(siteNameSelector);
+    const siteDescription = useAppSelector(siteDescriptionSelector);
 
     return (
         <Container maxWidth="xl">
         <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Box sx={{ 
-                // display: 'flex',
-                // alignItems: 'center',
-                // justifyContent: 'center',
                 textAlign: 'center',
                 width: '100%'
                 }}>
                 <Typography variant="h6" component="div">
-                    <Link href={`/`} underline="hover" color="inherit">{metaTitle}</Link>
+                    <Link href={`/`} underline="hover" color="inherit">{siteName}</Link>
                 </Typography>
                 <Typography variant="subtitle2" component="div" color="text.secondary">
-                {metaDescription}
+                {siteDescription}
                 </Typography>
             </Box>
         </Toolbar>

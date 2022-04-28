@@ -3,11 +3,11 @@
  */
 export type Site = {
     /**
-     * Webサイト名(meta title)
+     * Webサイト名
      */
-    metaTitle: string,
+    siteName: string
     /**
-     * Webサイト説明文(meta description)
+     * Webサイト説明文
      */
-    metaDescription: string | undefined
+    siteDescription?: string
 }

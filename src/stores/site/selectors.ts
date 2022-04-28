@@ -1,16 +1,16 @@
 import { AppState } from "../store";
 
 /**
- * Webサイト名(meta title)
+ * Webサイト名
  */
-export const metaTitleSelector = (state: AppState) => {
-    return state.site.metaTitle;
+export const siteNameSelector = (state: AppState) => {
+    return state.site.siteName;
 };
 
 /**
- * Webサイト説明文(meta description)
+ * Webサイト説明文
  */
- export const metaDescriptionSelector = (state: AppState) => {
-    return state.site.metaDescription;
+ export const siteDescriptionSelector = (state: AppState) => {
+    return state.site.siteDescription;
 };
 
