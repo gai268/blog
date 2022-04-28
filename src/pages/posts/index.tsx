@@ -1,4 +1,4 @@
-import { Container, Grid, Pagination, Stack } from '@mui/material'
+import { Box, Container, Grid } from '@mui/material'
 import type { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { PostItem } from '../../components/post/PostItem/PostItem'
@@ -15,7 +15,7 @@ import { siteReceived } from '../../stores/site/slices'
 import { postsPaginationReceived } from '../../stores/pagination/slices'
 import { PostsPagination } from '../../components/post/PostsPagination/PostsPagination'
 import { siteNameSelector } from '../../stores/site/selectors'
-import { useLayoutEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 // サーバーサイド処理
 type ServerSideProps = { 
@@ -46,8 +46,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const Page = ({page, postsResponse, siteResponse}: ServerSideProps) => {
   const dispatch = useAppDispatch()
 
+  // ページ読み込みが完了したか
+  const [isLoaded, setIsLoaded] = useState<boolean>(false)
+
   // 初期化処理
-  useLayoutEffect(() => {
+  useEffect(() => {
     // 投稿一覧を読み込む
     dispatch(postsReceived(postsResponse))
     // 投稿一覧のページネーション情報を読み込む
@@ -58,33 +61,37 @@ const Page = ({page, postsResponse, siteResponse}: ServerSideProps) => {
     dispatch(userReceived(siteResponse))
     // 関連リンク一覧情報を読み込む
     dispatch(linksReceived(siteResponse.links))
+    // ページ読み込み完了状態にする
+    setIsLoaded(true)
   }, [dispatch, page, postsResponse, siteResponse])
   
   const postsIds = useAppSelector(postsIdsSelector);
   const siteName = useAppSelector(siteNameSelector);
 
   return (
-    <div>
+    <>
       <Head>
         <title>{siteName}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header/>
-      <Container maxWidth="xl" component={'main'}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={9}>
-            {/* 記事一覧 */}
-            {postsIds.map(postId => <PostItem key={postId} postId={postId} />)}
-            <Grid container justifyContent={"center"} marginTop={1}>
-              <Grid item><PostsPagination/></Grid>   
+      <Box sx={{display: isLoaded ? undefined: "none"}}>
+        <Header/>
+        <Container maxWidth="xl" component={'main'}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={9}>
+              {/* 記事一覧 */}
+              {postsIds.map(postId => <PostItem key={postId} postId={postId} />)}
+              <Grid container justifyContent={"center"} marginTop={1}>
+                <Grid item><PostsPagination/></Grid>   
+              </Grid>
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <Sidebar></Sidebar>
             </Grid>
           </Grid>
-          <Grid item xs={12} sm={3}>
-            <Sidebar></Sidebar>
-          </Grid>
-        </Grid>
-      </Container>
-    </div>
+        </Container>
+      </Box>
+    </>
   )
 }
 

@@ -1,7 +1,7 @@
-import { Container, Grid } from '@mui/material'
-import type { GetServerSideProps, GetServerSidePropsResult } from 'next'
+import { Box, Container, Grid } from '@mui/material'
+import type { GetServerSideProps } from 'next'
 import Head from 'next/head'
-import { useEffect, useLayoutEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Header } from '../../components/common/Header/Header'
 import { postReceived } from '../../stores/posts/slices'
 import { useAppDispatch, useAppSelector } from '../../stores/hooks'
@@ -45,8 +45,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const Page = ({postResponse, siteResponse}: ServerSideProps) => {
   const dispatch = useAppDispatch();
 
+  // ページの読み込みが完了したか
+  const [isLoaded, setIsLoaded] = useState<boolean>(false)
+
   // 初期化処理
-  useLayoutEffect(() => {
+  useEffect(() => {
     // 記事の読み込み
     dispatch(postReceived(postResponse));
     // サイト情報を読み込む
@@ -55,6 +58,8 @@ const Page = ({postResponse, siteResponse}: ServerSideProps) => {
     dispatch(userReceived(siteResponse))
     // 関連リンク一覧情報
     dispatch(linksReceived(siteResponse.links))
+    // ページ読み込み完了状態にする
+    setIsLoaded(true)
   }, [dispatch, postResponse, siteResponse])
 
   const postId = postResponse.id
@@ -63,24 +68,26 @@ const Page = ({postResponse, siteResponse}: ServerSideProps) => {
   const post = postBy({id: postId})
   
   return (
-    <div>
+    <>
       <Head>
         <title>{post?.title} | {siteName}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header/>
-      <Container maxWidth="xl" component={'main'}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={9}>
-            {/* 記事 */}
-            <PostDetail postId={postId}></PostDetail>
+      <Box sx={{display: isLoaded ? undefined: "none"}}>
+        <Header/>
+        <Container maxWidth="xl" component={'main'}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={9}>
+              {/* 記事 */}
+              <PostDetail postId={postId}></PostDetail>
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <Sidebar></Sidebar>
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={3}>
-            <Sidebar></Sidebar>
-          </Grid>
-        </Grid>
-      </Container>
-    </div>
+        </Container>
+      </Box>
+    </>
   )
 }
 
