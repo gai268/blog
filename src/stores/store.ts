@@ -6,6 +6,7 @@ import { siteReducer } from './site/slices'
 import { userReducer } from './user/slices'
 
 export function makeStore() {
+  // Reference: https://redux-toolkit.js.org/api/configureStore
   return configureStore({
     reducer: {
       posts: postsReducer,
@@ -14,6 +15,8 @@ export function makeStore() {
       site: siteReducer,
       pagination: paginationReducer
     },
+    // The Redux DevTools Extension is disabled for production
+    devTools: process.env.NODE_ENV !== 'production',
   })
 }
 
