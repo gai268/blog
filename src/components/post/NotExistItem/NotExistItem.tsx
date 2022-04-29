@@ -11,6 +11,5 @@ export const NotExistItem = () => {
             }}>
             記事が存在しません
         </Card>
-
     )
 }
