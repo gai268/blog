@@ -56,8 +56,8 @@ export const PostItem = (props: Props) => {
                         {post ? dayjs.unix(post.publishedAt).format('YYYY.MM.DD') : "-"}
                     </Typography>
                 </Stack>
-                <IconButton onClick={handleClickFavorite}><FavoriteBorderIcon /></IconButton>
-                {post ? post.favoritesCount : "-"}
+                {/* <IconButton onClick={handleClickFavorite}><FavoriteBorderIcon /></IconButton>
+                {post ? post.favoritesCount : "-"} */}
             </CardContent>
         </Card>
     );

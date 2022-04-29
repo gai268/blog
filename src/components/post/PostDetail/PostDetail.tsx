@@ -45,8 +45,8 @@ export const PostDetail = (props: Props) => {
                     variant="body1" component={"div"} 
                     dangerouslySetInnerHTML={{__html: post?.body || "本文がありません。"}}>
                 </Typography>
-                <IconButton onClick={handleClickFavorite}><FavoriteBorderIcon /></IconButton>
-                {post ? post.favoritesCount : "-"}
+                {/* <IconButton onClick={handleClickFavorite}><FavoriteBorderIcon /></IconButton>
+                {post ? post.favoritesCount : "-"} */}
             </CardContent>
         </Card>
     );

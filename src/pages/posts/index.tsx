@@ -79,7 +79,7 @@ const Page = ({page, postsResponse, siteResponse}: ServerSideProps) => {
         <Header/>
         <Container maxWidth="xl" component={'main'}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={9}>
+            <Grid item xs={12} sm={9} mt={3}>
               {postsIds.length === 0 ? <NotExistItem/> : postsIds.map(postId => {
                 return (<>
                   {/* 記事一覧 */}
