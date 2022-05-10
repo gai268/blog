@@ -29,7 +29,8 @@ export const PostDetail = (props: Props) => {
 
     return(
         <Card elevation={0}>
-            <CardHeader sx={{ fontWeight: 'bold' }} 
+            <CardHeader
+                titleTypographyProps={{fontWeight:'bold'}}
                 title={post?.title}
                 subheader={
                     <Stack direction="row" alignItems="center" gap={1}>
