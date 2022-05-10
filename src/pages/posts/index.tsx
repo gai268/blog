@@ -79,17 +79,17 @@ const Page = ({page, postsResponse, siteResponse}: ServerSideProps) => {
         <Header/>
         <Container maxWidth="xl" component={'main'}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={9} mt={3}>
+            <Grid item xs={12} sm={9}>
               {postsIds.length === 0 ? <NotExistItem/> : postsIds.map(postId => {
                 return (<>
                   {/* 記事一覧 */}
                   <PostItem key={postId} postId={postId} />
-                  {/* ページネーション */}
-                  <Grid container justifyContent={"center"} marginTop={1}>
-                    <Grid item><PostsPagination/></Grid>
-                  </Grid>
                 </>)
               })}
+              {/* ページネーション */}
+              <Grid container justifyContent={"center"} marginTop={1}>
+                <Grid item><PostsPagination/></Grid>
+              </Grid>
             </Grid>
             <Grid item xs={12} sm={3}>
               <Sidebar></Sidebar>

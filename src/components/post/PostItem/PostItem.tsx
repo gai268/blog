@@ -40,7 +40,7 @@ export const PostItem = (props: Props) => {
     }
 
     return(
-        <Card elevation={0} sx={{ display: 'flex', flexWrap: 'nowrap', flexDirection: 'row' }}>
+        <Card elevation={0} sx={{ display: 'flex', flexWrap: 'nowrap', flexDirection: 'row', my:2 }}>
             <Link href={`/posts/${props.postId}`} sx={{position: 'relative', width: 151, flex: '1' }}>
                 <Image src={src} alt={post?.title} onError={handleErrorEyecatch} layout='fill' objectFit="contain"/>
             </Link>
