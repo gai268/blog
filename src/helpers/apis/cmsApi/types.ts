@@ -10,12 +10,26 @@ export type FetchPostsParams = {
     /**
      * 投稿の取得件数。指定しない場合のデフォルト値は10です。
      */
-    limit?: number,
+    limit?: number
 
     /**
      * 何件目から取得するか。デフォルト値は0です。
      */
     offset?: number
+}
+/**
+ * 投稿取得APIのパラメータ
+ */
+export type FetchPostParams = {
+    /**
+     * 記事のコンテンツID
+     */
+    contentId: string
+
+    /**
+     * 下書き状態のコンテンツを取得するためのキー
+     */
+    draftKey?: string
 }
 
 /*
@@ -27,8 +41,8 @@ export type FetchPostsParams = {
  * 画像情報レスポンス
  */
 type ImageResponse = {
-    url: string,
-    height: number,
+    url: string
+    height: number
     width: number
 }
 
@@ -37,23 +51,23 @@ type ImageResponse = {
  */
 export type PostsResponse = {
     contents: PostResponse[]
-    totalCount: number,
-    offset: number,
+    totalCount: number
+    offset: number
     limit: number
 }
 /**
  * 投稿情報レスポンス
  */
 export type PostResponse = {
-    id: string,
+    id: string
     publishedAt: string
-    title: string,
-    content: string,
-    eyecatch: ImageResponse,
+    title: string
+    content: string
+    eyecatch: ImageResponse
     category: CategoryResponse
 }
 type CategoryResponse = {
-    id: string,
+    id: string
     name: string
 }
 

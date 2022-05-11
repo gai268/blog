@@ -24,10 +24,12 @@ type ServerSideProps = {
 }
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const postId = context.params?.postId as string;
+  // 下書きキー
+  const draftKey = context.query ? (context.query.draftKey as string) : undefined; 
   // 並列処理
   const [postResponse, siteResponse] = await Promise.all([
     // 投稿を取得
-    cmsApi.fetchPost(postId).catch(e => {
+    cmsApi.fetchPost({contentId: postId, draftKey}).catch(e => {
       if(e instanceof AxiosError && e.isAxiosError){
         // 存在しない投稿IDであった場合
         if(e.response?.status === 404) return null

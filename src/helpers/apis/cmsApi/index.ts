@@ -1,4 +1,4 @@
-import { FetchPostsParams, PostResponse, PostsResponse, SiteResponse } from './types'
+import { FetchPostParams, FetchPostsParams, PostResponse, PostsResponse, SiteResponse } from './types'
 import axios, { AxiosRequestHeaders } from 'axios';
 import axiosRetry from 'axios-retry';
 
@@ -35,8 +35,13 @@ export const cmsApi = {
      * 投稿を取得する
      * @param contentId 投稿のコンテンツID
      */
-    fetchPost: async (contentId: string): Promise<PostResponse> => {
-        const response = await client.get(`/posts/${contentId}`, {'axios-retry': { retries: 2 }})
+    fetchPost: async (params: FetchPostParams): Promise<PostResponse> => {
+        const response = await client.get(`/posts/${params.contentId}`, {
+            'axios-retry': { retries: 2 },
+            params: {
+                draftKey: params.draftKey
+            }
+        })
         const post: PostResponse = response.data
         return post
     },
